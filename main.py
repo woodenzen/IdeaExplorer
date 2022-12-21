@@ -7,11 +7,6 @@ import time
 import pathlib
 from collections import defaultdict
 from datetime import date, datetime, timedelta
-import random
-from turtle import rt
-from dateutil.relativedelta import relativedelta
-
-
 
 # functions
 def note_title():
