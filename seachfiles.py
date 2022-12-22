@@ -2,7 +2,7 @@
 
 import os
 import re
-
+Here is a second test.
 
 tagPattern= "(?<!#)#(?![#, ,'])[0-9,a-z,A-Z]*.|\[\[\D.*\]\]"
 targetDir="/Users/will/Dropbox/Projects/zettelkasten/testzks/Sample-Zettelkasten-Archive-main/"
