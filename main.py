@@ -8,6 +8,7 @@ import pathlib
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 
+
 # functions
 def note_title():
     for fname in os.listdir(zettelkasten):
@@ -37,6 +38,8 @@ links = re.findall("(?<!›)\[\[\d{12}\]\]", data)
 source = re.findall('\d{12}', zettel)
 mod_time = note.stat().st_ctime
 
+now=datetime.now()
+dt_string = now.strftime("%c")
 
 for t in tags:
     print(t)
@@ -48,3 +51,4 @@ for l in links:
     # sec_tags()   
 print(f"[[{source[0]}]]")
 print(f"This zettel was modified at {time.ctime(mod_time)}")
+print(f"The current time is {dt_string}.")
