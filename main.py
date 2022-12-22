@@ -10,7 +10,6 @@ from datetime import date, datetime, timedelta
 
 # functions
 def note_title():
-    global fname
     for fname in os.listdir(zettelkasten):
         if f in fname:
             print(f'{fname[:-16]} has the keyword {l}')
@@ -25,7 +24,6 @@ def sec_tags():
             
 # path to zettelkasten
 zettelkasten = pathlib.Path("/Users/will/Dropbox/zettelkasten/")
-path = "/Users/will/Dropbox/zettelkasten/"
 zettel = "A Proustian View On How to Be a Good Friend  202211140823.md"
 note = pathlib.Path("/Users/will/Dropbox/zettelkasten/", zettel)
 

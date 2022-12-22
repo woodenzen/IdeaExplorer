@@ -6,6 +6,8 @@ import pathlib
 
 # Returns the filename from a search (i) of a directory tree much like grep.
 # Limit the directory size. 
+# Be sure to define the `path`
+
 def searchforpath(i):
     filePaths = glob.glob(os.path.join(path,'**/*{0}*.md'.format(i)), recursive = True)
     if filePaths:
