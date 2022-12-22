@@ -46,7 +46,7 @@ for t in tags:
 for l in links:
     f = l[2:-2]
     note_title()  
-    print(fname)
+    # print(fname)
     # sec_tags()   
 print(f"[[{source[0]}]]")
 print(f"This zettel was modified at {time.ctime(mod_time)}")
