@@ -4,15 +4,16 @@ import os
 import glob
 import pathlib
 
-path = pathlib.Path("/Users/will/Dropbox/zettelkasten")
-
-# Returns the file from a search (i) of a directory tree. 
+# Returns the filename from a search (i) of a directory tree much like grep.
+# Limit the directory size. 
 def searchforpath(i):
-    filePaths = glob.glob(os.path.join(path,'./**/*{0}*.md'.format(i)), recursive = True)
+    filePaths = glob.glob(os.path.join(path,'**/*{0}*.md'.format(i)), recursive = True)
     if filePaths:
-        print(filePaths[0])
+        fil=filePaths[0]
+    return fil    
         
 if __name__ == "__main__":
-    searchforpath("Keep Our Utensils")    
+    path = pathlib.Path("/Users/will/Dropbox/zettelkasten")
+    print(searchforpath("Keep Our Utensils"))    
     
 
