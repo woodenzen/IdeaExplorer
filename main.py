@@ -7,10 +7,11 @@ import time
 import pathlib
 from collections import defaultdict
 from datetime import date, datetime, timedelta
+from seachfiles import findmulti
 
 
 # functions
-def note_title():
+def note_titles():
     for fname in os.listdir(zettelkasten):
         if f in fname:
             print(f'{fname[:-16]} has the keyword {l}')
@@ -41,14 +42,20 @@ mod_time = note.stat().st_ctime
 now=datetime.now()
 dt_string = now.strftime("%c")
 
+
 for t in tags:
     print(t)
     
 for l in links:
     f = l[2:-2]
-    note_title()  
+    note_titles()  
     # print(fname)
     # sec_tags()   
 print(f"[[{source[0]}]]")
 print(f"This zettel was modified at {time.ctime(mod_time)}")
 print(f"The current time is {dt_string}.")
+
+tagPattern= "(?<!#)#(?![#, ,'])[0-9,a-z,A-Z]*.|\[\[\D.*\]\]"
+# targetDir="/Users/will/Dropbox/Projects/zettelkasten/testzks/Sample-Zettelkasten-Archive-main/"
+# for i in findmulti(targetDir, tagPattern):
+#        print(i)
