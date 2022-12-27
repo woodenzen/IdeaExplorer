@@ -14,14 +14,14 @@ from seachfiles4tags import findmulti
 def note_titles():
     for fname in os.listdir(zettelkasten):
         if f in fname:
-            print(f'{fname[:-16]} has the keyword {l}')
-    return fname
+            print(f'{fname}')
+            return fname
       
-def sec_tags():
-    file = open((os.path.join(zettelkasten, fname), "r"))
-    data = file.read()
-    tags = re.findall('#\S\S*', data)         
-    print(tags)   
+# def sec_tags():
+#     file = open((os.path.join(zettelkasten, fname), "r"))
+#     data = file.read()
+#     tags = re.findall('#\S\S*', data)         
+#     print(tags)   
 
             
 # path to zettelkasten
@@ -48,14 +48,17 @@ for t in tags:
     
 for l in links:
     f = l[2:-2]
-    note_titles()  
+    note_titles() 
     # print(fname)
     # sec_tags()   
 print(f"[[{source[0]}]]")
 print(f"This zettel was modified at {time.ctime(mod_time)}")
 print(f"The current time is {dt_string}.")
 
-tagPattern= "(?<!#)#(?![#, ,'])[0-9,a-z,A-Z]*.|\[\[\D.*\]\]"
-# targetDir="/Users/will/Dropbox/Projects/zettelkasten/testzks/Sample-Zettelkasten-Archive-main/"
-# for i in findmulti(targetDir, tagPattern):
-#        print(i)
+tagPattern = "(?<!#)#(?![#, ,'])[0-9,a-z,A-Z]*.|\[\[\D.*\]\]" # Regex pattern to find tags.
+targetFile = note_titles() # Directory to search for tags.
+
+for i in findmulti(targetFile, tagPattern):
+    if i[1] != []: # This line filters out files that don't have tags.
+        print(i)
+
