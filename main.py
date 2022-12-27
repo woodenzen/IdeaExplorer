@@ -7,7 +7,7 @@ import time
 import pathlib
 from collections import defaultdict
 from datetime import date, datetime, timedelta
-from seachfiles import findmulti
+from seachfiles4tags import findmulti
 
 
 # functions

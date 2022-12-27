@@ -15,8 +15,11 @@ def findmulti(target, pattern):
     return lst 
         
 if __name__ == "__main__":
-    tagPattern= "(?<!#)#(?![#, ,'])[0-9,a-z,A-Z]*.|\[\[\D.*\]\]"
-    targetDir="/Users/will/Dropbox/Projects/zettelkasten/testzks/Sample-Zettelkasten-Archive-main/"
+    
+    tagPattern= "(?<!#)#(?![#, ,'])[0-9,a-z,A-Z]*.|\[\[\D.*\]\]" # Regex pattern to find tags.
+    targetDir="/Users/will/Dropbox/Projects/zettelkasten/testzks/Sample-Zettelkasten-Archive-main/" # Directory to search for tags.
+    
     for i in findmulti(targetDir, tagPattern):
-       print(i)
+       if i[1] != []: # This line filters out files that don't have tags.
+           print(i)
 
