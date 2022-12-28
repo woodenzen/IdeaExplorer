@@ -60,5 +60,6 @@ targetFile = note_titles() # Directory to search for tags.
 
 for i in findmulti(targetFile, tagPattern):
     if i[1] != []: # This line filters out files that don't have tags.
-        print(i)
+        unique_list = list(set(i)) # This line removes duplicates.
+        print(unique_list)
 
