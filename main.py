@@ -42,24 +42,30 @@ mod_time = note.stat().st_ctime
 now=datetime.now()
 dt_string = now.strftime("%c")
 
-
+# Print target's tags
 for t in tags:
     print(t)
     
+# Print target's Links
 for l in links:
     f = l[2:-2]
     note_titles() 
     # print(fname)
     # sec_tags()   
+    
+# Print target's UUID    
 print(f"[[{source[0]}]]")
+# Print target's modification time
 print(f"This zettel was modified at {time.ctime(mod_time)}")
+# Print current time
 print(f"The current time is {dt_string}.")
 
 tagPattern = "(?<!#)#(?![#, ,'])[0-9,a-z,A-Z]*.|\[\[\D.*\]\]" # Regex pattern to find tags.
 targetFile = note_titles() # Directory to search for tags.
 
+# Attempt to find all tags in target's linked files.
 for i in findmulti(targetFile, tagPattern):
     if i[1] != []: # This line filters out files that don't have tags.
         unique_list = list(set(i)) # This line removes duplicates.
-        print(unique_list)
+print(unique_list)
 
