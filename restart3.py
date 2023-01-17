@@ -35,7 +35,7 @@ with open((os.path.join(zettelkasten, zettel)), "r") as f:
     content = f.read()
     
 #####
-# Timing Code
+# Timing Math Code
 #####
 # Birthed time from UUID
 source = re.findall('\d{12}', zettel)
@@ -77,14 +77,44 @@ else:
         age_days = str(age_days) + " days"
     note_age = f'This note is {age_days} old.'    
     
+# How long ago was the last update
+timestamp = time.ctime(mod_time)
+timestamp_dt = datetime.strptime(timestamp, "%a %b %d %H:%M:%S %Y")
+mdelta = datetime.now() - timestamp_dt
+
+if mdelta.days > 365:
+    years = mdelta.days/365
+    total_time = divmod(years, 1)
+    mdays=round(total_time[1]*365)
+    myears=round(total_time[0])
+    if myears == 1:
+        myears = str(myears) + " year"
+    else:
+        myears = str(m_years) + " years"
+    if mdays == 1:
+        mdays = str(mdays) + " day"
+    else:
+        mdays = str(mdays) + " days"
+    last_mod = f'This note last modified {myears} and {mdays} ago.'    
     
+else:
+    days = mdelta.days
+    # total_time = divmod(years, 1)
+    mdays=round(days)
+    if mdays == 1:
+        mdays = str(mdays) + " day"
+    else:
+        mdays = str(mdays) + " days"
+    last_mod = f'This note last modified {mdays} ago.'    
+        
     
-# Rough centering
-indent=len(zettel)
+
 
 #####
 # Printing Code
 #####
+# Rough centering
+indent=len(zettel)
 # Print target's name
 print(f"{str.upper(zettel[:-16]).center(indent)}")
 # Print a line of dashes
@@ -95,11 +125,11 @@ print(f"Birthed on {birthed}".center(indent))
 print(f"{note_age}".center(indent))
 # Print target's modification time
 print(f"Last modified {time.ctime(mod_time)}".center(indent))
+# Print time since last modification
+print(f"{last_mod}".center(indent))
 # Print current time
-print(f"Current time is {dt_string}.".center(indent))
-# How much time between now and birthed
+print(f"The current time is {dt_string}.".center(indent))
 
-    
     
 #####
 # Idea Explorer Code
