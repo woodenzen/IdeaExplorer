@@ -36,7 +36,7 @@ with open((os.path.join(zettelkasten, zettel)), "r") as f:
     content = f.read()
     
 #####
-# Timing Math Code
+# Timing Math Grammar Code
 #####
 # Birthed time from UUID
 source = re.findall('\d{12}', zettel)
@@ -51,7 +51,7 @@ mod_time = os.path.getmtime(TheArchivePath() + zettel)
 now=datetime.now()
 dt_string = now.strftime("%c")
 
-# Age (a) of the target
+# Age (a) of the target - grammar
 delta = now-dt
 if delta.days > 365:
     years = delta.days/365
@@ -78,7 +78,7 @@ else:
         adays = str(adays) + " days"
     note_age = f'This note has existed for {adays}.'    
     
-# How long ago was the last modified (m)
+# How long ago was the last modified (m) - grammar
 timestamp = time.ctime(mod_time)
 timestamp_dt = datetime.strptime(timestamp, "%a %b %d %H:%M:%S %Y")
 mdelta = datetime.now() - timestamp_dt
