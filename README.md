@@ -1,6 +1,6 @@
-Moving on
-    - intra-note links are not being reported.
-      - Example 
-      - Refactoring to clarify confusion §[[202211200806]] 
-    - Links found but not backlinks
-    - Tags found but not tags on links.
+# Notes:
+1. I want to add a column with the modified times of each file
+2. I want to add a column with the link type, incoming or outgoing.
+3. I want to add to the self-list if the target note is a hub or subhub.
+4. I want to add to the self-list if the target note in proofing.
+5. I want to prettify the self-list.
