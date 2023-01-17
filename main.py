@@ -26,7 +26,7 @@ def note_titles():
             
 # path to zettelkasten
 zettelkasten = pathlib.Path("/Users/will/Dropbox/zettelkasten/")
-zettel = "A Proustian View On How to Be a Good Friend  202211140823.md"
+zettel = "A Proustian View On How to Be a Good Friend 202211140823.md"
 note = pathlib.Path("/Users/will/Dropbox/zettelkasten/", zettel)
 
 # file handling
