@@ -24,6 +24,20 @@ def TheArchivePath():
     return (path.path) # path is the part of the path that is formatted for use as a path.
 
 #####
+# Function for getting inbound links
+#####
+def search_for_incoming(UUID):
+    files_with_uuid = []
+    for root, dirs, files in os.walk(zettelkasten):
+        for file in files:
+            if os.path.splitext(file)[1] == ".md":
+                with open(os.path.join(root, file), 'r') as f: 
+                    data=f.read()
+                    if re.search(UUID, data):
+                        files_with_uuid.append(file)
+    return files_with_uuid
+
+#####
 # Variables
 #####
 zettelkasten = TheArchivePath()
@@ -34,9 +48,10 @@ zettel = "Cognitive Bias 201910281718.md"
 #####
 with open((os.path.join(zettelkasten, zettel)), "r") as f:
     content = f.read()
+    word_count = len(content.split())
     
 #####
-# Timing Math Grammar Code
+# Target file age related math grammar code
 #####
 # Birthed time from UUID
 source = re.findall('\d{12}', zettel)
@@ -96,7 +111,7 @@ if mdelta.days > 365:
         mdays = str(mdays) + " day"
     else:
         mdays = str(mdays) + " days"
-    last_mod = f'This note was last modified {myears} and {mdays} ago.'    
+    last_mod = f'This note was last modified {myears} {mdays} ago'    
     
 else:
     days = mdelta.days
@@ -106,7 +121,7 @@ else:
         mdays = str(mdays) + " day"
     else:
         mdays = str(mdays) + " days"
-    last_mod = f'This note was last modified {mdays} ago.'    
+    last_mod = f'This note was last modified {mdays} ago'    
         
     
 
@@ -124,7 +139,7 @@ print(f"{note_age}".center(indent))
 # Print target's creation time
 print(f"Birthed on {birthed}".center(indent))
 # Print how long ago the target was modified
-print(f"{last_mod}".center(indent))
+print(f"{last_mod} and now contains {word_count} words.".center(indent))
 # Print target's modification time
 print(f"Last modified {time.ctime(mod_time)}".center(indent))
 # Print current time
@@ -170,7 +185,7 @@ tags = file_tags
 counts = Counter([tag for values in tags.values() for tag in values])
 
 # Modify each tag to be in the format "#tag X"
-modified_tags = {key: [tag + " " + "(" + str(counts[tag]) + ")" for tag in value] for key, value in tags.items()}
+modified_tags = {key: [tag + "(" + str(counts[tag]) + ")" for tag in value] for key, value in tags.items()}
 
 # Iterate over the modified_tags dictionary
 for file_name, tags in modified_tags.items():
@@ -181,3 +196,6 @@ for file_name, tags in modified_tags.items():
 
 # Print the table
 print(table)
+
+
+print(search_for_incoming(source))
