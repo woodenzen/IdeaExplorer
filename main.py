@@ -41,7 +41,7 @@ def search_for_incoming(UUID):
 # Variables
 #####
 zettelkasten = TheArchivePath()
-zettel = "Cognitive Bias 201910281718.md"
+zettel = "Traveling the Object to Meta Levels of Abstraction 202208191951.md"
 
 #####
 # Open the file
