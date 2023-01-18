@@ -36,7 +36,7 @@ python ./main.py
 
 ## This is the current status.
 
-![](media/Zettel Idea Navigator.png)
+![Zettel Idea Navigator](https://raw.githubusercontent.com/woodenzen/Idea-Explorer/master/media/ZettelIdeaNavigator.png)
 
 
 ## Me
