@@ -1,11 +1,10 @@
 # Zettelkasten Idea Explorer
-#####(Document in development)
+**(Document in development)**  
 Designed with The Archive, zettelkasting application, in mind. Plain text with wikilinks. 
 My ideas ares for this script are modeled after [the public musings of Soren Bjornstad](https://zettelkasten.sorenbjornstad.com/#ImprovementOfDailyWork)  
 The Idea Explorer or Navigator is an idea that can help surface interesting relationships by looking at common tags, age and modification times, and the prevalence of incoming and outgoing links. There is likely other relevance that can be "fished out of the idea pond."
 
-![](./media/Soren's Idea Explorer.png)  
-![Soren's Idea Explorer](https://raw.githubusercontent.com/woodenzen/Idea-Explorer/master/media/Soren'sIdeaExplorer.png)
+![Soren's Idea Explorer](media/Soren'sIdeaExplorer.png)
 
 ## Install
 - Tested on Python 3.9.13
@@ -36,8 +35,11 @@ python ./main.py
 
 ## This is the current status.
 
-![Zettel Idea Navigator](https://raw.githubusercontent.com/woodenzen/Idea-Explorer/master/media/ZettelIdeaNavigator.png)
+![Zettel Idea Navigator](media/ZettelIdeaNavigator.png)
 
 
 ## Me
-I'm a mediocre programmer. It is something I love doing. I may have found a tutor. If you can help, please contact me.
+I'm a mediocre programmer.  
+It is something I love doing.  
+I may have found a tutor.  
+If you can help, please contact me.
