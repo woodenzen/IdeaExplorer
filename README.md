@@ -1,4 +1,4 @@
-# Zettelkasten Idea Explorer
+# Zettelkasten Idea Explorer  
 **(Document in development)**  
 Designed with The Archive, zettelkasting application, in mind. Plain text with wikilinks. 
 My ideas ares for this script are modeled after [the public musings of Soren Bjornstad](https://zettelkasten.sorenbjornstad.com/#ImprovementOfDailyWork)  
@@ -39,4 +39,7 @@ python ./main.py
 
 
 ## Me
-I'm a mediocre programmer. It is something I love doing. I may have found a tutor. If you can help, please contact me.
+I'm a mediocre programmer.  
+It is something I love doing.  
+I may have found a tutor.  
+If you can help, please contact me.
