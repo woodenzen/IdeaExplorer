@@ -5,6 +5,7 @@ My ideas ares for this script are modeled after [the public musings of Soren Bjo
 The Idea Explorer or Navigator is an idea that can help surface interesting relationships by looking at common tags, age and modification times, and the prevalence of incoming and outgoing links. There is likely other relevance that can be "fished out of the idea pond."
 
 ![](./media/Soren's Idea Explorer.png)
+![Soren's Idea Explorer](https://raw.githubusercontent.com/woodenzen/Idea-Explorer/master/media/Soren's Idea Explorer.png)
 
 ## Install
 - Tested on Python 3.9.13
