@@ -8,6 +8,7 @@ from prettytable import PrettyTable
 from plistlib import load
 from urllib.parse import urlparse
 
+
 #####
 # Function for finding the path to The Archive
 #####
@@ -26,22 +27,38 @@ def TheArchivePath():
 #####
 # Function for getting inbound links
 #####
-def search_for_incoming(UUID):
+def search_for_incoming(UID):
     files_with_uuid = []
-    for root, dirs, files in os.walk(zettelkasten):
-        for file in files:
-            if os.path.splitext(file)[1] == ".md":
-                with open(os.path.join(root, file), 'r') as f: 
-                    data=f.read()
-                    if re.search(UUID, data):
-                        files_with_uuid.append(file)
+    markdown_files = glob.glob(os.path.join(zettelkasten,'*.md'))
+    for file in markdown_files:
+        with open(file, 'r') as f:
+            data = f.read()
+            if re.findall(UID, data):
+                files_with_uuid.append(file)
     return files_with_uuid
 
 #####
 # Variables
 #####
 zettelkasten = TheArchivePath()
-zettel = "Traveling the Object to Meta Levels of Abstraction 202208191951.md"
+zettel = "Process And Create New Ideas 202103111214.md"
+
+# Birthed time for target from its UID
+source = re.findall('\d{12}', zettel)
+source = source[0]
+dt = datetime.strptime(source, '%Y%m%d%H%M')
+birthed = dt.strftime('%c')
+
+# Source link is the [[UID]] without the UUID indicator 
+# so the regex will not report self as an inbound link.
+source_link = " \[\["+source+"\]\]"
+
+# Modification time of the target
+mod_time = os.path.getmtime(TheArchivePath() + zettel)
+
+# Current time
+now=datetime.now()
+dt_string = now.strftime("%c")
 
 #####
 # Open the file
@@ -53,20 +70,8 @@ with open((os.path.join(zettelkasten, zettel)), "r") as f:
 #####
 # Target file age related math grammar code
 #####
-# Birthed time from UUID
-source = re.findall('\d{12}', zettel)
-source = source[0]
-dt = datetime.strptime(source, '%Y%m%d%H%M')
-birthed = dt.strftime('%c')
 
-# Modification time of the target
-mod_time = os.path.getmtime(TheArchivePath() + zettel)
-
-# Current time
-now=datetime.now()
-dt_string = now.strftime("%c")
-
-# Age (a) of the target - grammar
+# Age(a) math and grammar of the target file
 delta = now-dt
 if delta.days > 365:
     years = delta.days/365
@@ -166,14 +171,14 @@ for link in links:
         with open(file_name, 'r') as f:
             content = f.read()
         # Find all tags in the form of #XXXX
-        tags = re.findall(r'#\w+', content)
+        tags = re.findall(r'#(?!#{1})\S+', content)
         # Store the tags in the dictionary
         file_tags[file_name] = tags
 
 # Print the results
 # Create the table
 table = PrettyTable()
-table.field_names = ["Note Name", "Tags"]
+table.field_names = ["Note Name", "Tags", "Modified", "Direction"]
 
 #####
 # Modify the tags to be in the format "#tag X" where X is the number of occurrences of the tag
@@ -191,11 +196,59 @@ modified_tags = {key: [tag + "(" + str(counts[tag]) + ")" for tag in value] for 
 for file_name, tags in modified_tags.items():
     # Concatenate all the tags using the join function
     tags_str = ", ".join(tags)
+    # Get the modification time of the file using os.path.getmtime then convert it to a string and format it
+    mtime = os.path.getmtime(file_name)
+    last_mod = time.ctime(mtime)
+    last_mod_dt = datetime.strptime(last_mod, "%a %b %d %H:%M:%S %Y")
+    link_direction = "outbound"
     # Add the file name and the concatenated tags to the table
-    table.add_row([file_name[33:-15]+"\n"+"[["+file_name[-15:-3]+"]]", tags_str])
+    table.add_row([file_name[33:-15]+"\n"+"[["+file_name[-15:-3]+"]]", tags_str, last_mod_dt.strftime("%Y-%m-%d %H:%M"), link_direction])
+
+############################################
+file_names = search_for_incoming(source_link)
+for file_name in file_names:
+    # Open the file
+    with open(file_name, 'r') as f:
+        content = f.read()
+    # Find all tags in the form of #XXXX
+    tags = re.findall(r'#(?!#{1})\S+', content)
+    # Store the tags in the dictionary
+    file_tags[file_name] = tags
+
+# Print the results
+# Create the table
+table2 = PrettyTable()
+table2.field_names = ["Note Name", "Tags", "Modified", "Direction"]
+
+#####
+# Modify the tags to be in the format "#tag X" where X is the number of occurrences of the tag
+#####
+# Original dictionary
+tags = file_tags
+
+# Count occurrences of each tag
+counts = Counter([tag for values in tags.values() for tag in values])
+
+# Modify each tag to be in the format "#tag X"
+modified_tags = {key: [tag + "(" + str(counts[tag]) + ")" for tag in value] for key, value in tags.items()}
+
+# Iterate over the modified_tags dictionary
+for file_name, tags in modified_tags.items():
+    # Concatenate all the tags using the join function
+    tags_str = ", ".join(tags)
+    # Get the modification time of the file using os.path.getmtime then convert it to a string and format it
+    mtime = os.path.getmtime(file_name)
+    last_mod = time.ctime(mtime)
+    last_mod_dt = datetime.strptime(last_mod, "%a %b %d %H:%M:%S %Y")
+    link_direction = "incoming"
+    # Add the file name and the concatenated tags to the table
+    table2.add_row([file_name[33:-15]+"\n"+"[["+file_name[-15:-3]+"]]", tags_str, last_mod_dt.strftime("%Y-%m-%d %H:%M"), link_direction])
+
+############################################
 
 # Print the table
-print(table)
+print(table.get_string(title="Idea Explorer"))
+print(table2.get_string(title="Idea Explorer"))
 
 
-print(search_for_incoming(source))
+# print(search_for_incoming(source_link)) #A list of all the "file_name" that link to the target file
