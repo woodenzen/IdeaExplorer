@@ -1,0 +1,2 @@
+202302080608
+Record: {'ntitle': 'Read in Clusters', 'fname': '/Users/will/Dropbox/zettelkasten/Read in Clusters 202302080608.md', 'cdate': 'Wed Feb  8 06:08:00 2023', 'age': 'This note has existed for 1 day.', 'lastmdate': 'This note was last modified 1 day ago', 'WC': 355, 'outbound': ['202302080608', '202208081721', '202109200657', '202109200659', '202112091728'], 'tags': [['#reading-strategies', '#AI', '#)']]}

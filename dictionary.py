@@ -7,6 +7,7 @@ import glob
 from datetime import datetime
 from plistlib import load
 from urllib.parse import urlparse
+from collections import Counter
 
 #####
 # Function for finding the path to The Archive
@@ -22,6 +23,30 @@ def TheArchivePath():
         pl = load(fp) # load is a special function for use with a plist
         path = urlparse(pl['archiveURL']) # 'archiveURL' is the key that pairs with the zk path
     return (path.path) # path is the part of the path that is formatted for use as a path.
+
+#####
+# Function for outgoing links with note titles
+#####
+def explorer(zettel):
+    for key, value in zk_info.items():
+        if value["ntitle"] == zettel:
+            # print(key)
+            # print('Record:', value)
+            # print(value["ntitle"])
+            # print(value["outbound"])
+            for i in value["outbound"]:
+                # print(i)
+                if zk_info.get(i):
+                    print(i, zk_info[i]["ntitle"],"\n", zk_info[i]["age"],"\n", zk_info[i]["lastmdate"],"\n", zk_info[i]["WC"], "words")
+                    print("This is an outbound link.")
+                    print(zk_info[i]["tags"])
+                    # Count occurrences of each tag in the dictionary record
+                    counts = Counter([tag for values in zk_info[i]["tags"] for tag in values])  
+                    print(counts)
+                    # Modify each tag to be in the format "#tag X"
+                    # modified_tags = {i: [tag + "(" + str(counts[tag]) + ")" for tag in value] for key, value in zk_info[i]["tags"]}
+                else:
+                    print(i, "This is an intralink.")
 
 #####
 # Variables
@@ -154,11 +179,9 @@ for file in glob.iglob(zettelkasten+'*.md'):
     # Store the record in the dictionary of records with the UUID as the key zk-info[uuid]
     zk_info[uuid] = file_info
     
-for key, value in zk_info.items():
-    # if value["ntitle"] == "H-University of Idaho":
-        print('Record ID:', key)
-        print('Record:', value)
-   
+explorer("Pastoral Narratives") 
+
+
 # How do I print the value of the key 202211171832?
 # if zk_info.get("202211171832"):
 #     print(zk_info["202211171832"])

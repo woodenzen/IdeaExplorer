@@ -93,15 +93,13 @@ for file in glob.iglob(zettelkasten+'*.md'):
             adays = str(adays) + " days"
         note_age = f'This note has existed for {adays}.'   
         
+    # Modification time of the file with proper grammar
     mod_time = os.path.getmtime(file) 
     # How long ago was the last modified (m) - grammar
     timestamp = time.ctime(mod_time)
     timestamp_dt = datetime.strptime(timestamp, "%a %b %d %H:%M:%S %Y")
-
-    #####
-    # Target file modification math grammar code
-    #####    
     mdelta = datetime.now() - timestamp_dt
+
     if mdelta.days > 365:
         years = mdelta.days/365
         total_time = divmod(years, 1)
@@ -160,8 +158,10 @@ for key, value in zk_info.items():
     # if value["ntitle"] == "H-University of Idaho":
         print('Record ID:', key)
         print('Record:', value)
+
    
 # How do I print the value of the key 202211171832?
 # if zk_info.get("202211171832"):
 #     print(zk_info["202211171832"])
+
    
