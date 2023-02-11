@@ -8,6 +8,7 @@ from datetime import datetime
 from plistlib import load
 from urllib.parse import urlparse
 from collections import Counter
+from collections import defaultdict
 
 #####
 # Function for finding the path to The Archive
@@ -41,12 +42,39 @@ def explorer(zettel):
                     print("This is an outbound link.")
                     print(zk_info[i]["tags"])
                     # Count occurrences of each tag in the dictionary record
-                    counts = Counter([tag for values in zk_info[i]["tags"] for tag in values])  
-                    print(counts)
+                    # counts = Counter([tag for values in zk_info[i]["tags"] for tag in values])  
+                    # print(counts)
                     # Modify each tag to be in the format "#tag X"
                     # modified_tags = {i: [tag + "(" + str(counts[tag]) + ")" for tag in value] for key, value in zk_info[i]["tags"]}
                 else:
                     print(i, "This is an intralink.")
+
+#####
+# Function for tag cloud
+#####
+def tag_cloud(zettel):
+    outbound_records = [zk_info[id] for id in zk_info[zettel]['outbound'] if 'outbound' in zk_info[id]]
+
+    tag_count = defaultdict(int)
+    for record in outbound_records:
+        for tag_list in record['tags']:
+            for tag in tag_list:
+                tag_count[tag] += 1
+
+    sorted_tag_count = sorted(tag_count.items(), key=lambda x: x[1], reverse=True)
+    for tag, count in sorted_tag_count:
+        print(f"{tag} {count}")
+        
+#####
+# Function for inbound links uuids
+#####        
+def inbound_uuid(zettel):
+    related_records = []
+    for key, value in zk_info.items():
+        if 'outbound' in value and zettel in value['outbound'] and key != 'outbound':
+            related_records.append(key)
+    print(related_records)
+
 
 #####
 # Variables
@@ -179,7 +207,10 @@ for file in glob.iglob(zettelkasten+'*.md'):
     # Store the record in the dictionary of records with the UUID as the key zk-info[uuid]
     zk_info[uuid] = file_info
     
-explorer("Pastoral Narratives") 
+# explorer("Pastoral Narratives") 
+tag_cloud("202302080608")
+print(zk_info["202302080608"]['outbound'])
+inbound_uuid("202302080608")
 
 
 # How do I print the value of the key 202211171832?
