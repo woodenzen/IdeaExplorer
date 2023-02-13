@@ -31,11 +31,21 @@ def TheArchivePath():
 def explorer(zettel):
     for key, value in zk_info.items():
         if value["ntitle"] == zettel:
+            # print(key)
+            # print('Record:', value)
+            # print(value["ntitle"])
+            # print(value["outbound"])
             for i in value["outbound"]:
+                # print(i)
                 if zk_info.get(i):
                     print(i, zk_info[i]["ntitle"],"\n", zk_info[i]["age"],"\n", zk_info[i]["lastmdate"],"\n", zk_info[i]["WC"], "words")
                     print("This is an outbound link.")
                     print(zk_info[i]["tags"])
+                    # Count occurrences of each tag in the dictionary record
+                    # counts = Counter([tag for values in zk_info[i]["tags"] for tag in values])  
+                    # print(counts)
+                    # Modify each tag to be in the format "#tag X"
+                    # modified_tags = {i: [tag + "(" + str(counts[tag]) + ")" for tag in value] for key, value in zk_info[i]["tags"]}
                 else:
                     print(i, "This is an intralink.")
 
@@ -101,11 +111,12 @@ def label_links(outbound, inbound):
     # sort by the first part of the string, which is the UUID, making the list sort with newest dates first
     return direction
 
+
+
 #####
 # Variables
 #####
 zettelkasten = TheArchivePath()
-zettel = "202101232137"
 
 # Step 1: Store all files' information in a dictionary
 
@@ -117,6 +128,21 @@ for file in glob.iglob(zettelkasten+'*.md'):
     # Extract the file's UUID and title from the file name
     uuid = file[-15:-3]
     title = file.split('/')[-1].split('.')[0][:-13]
+        
+    # # Birthed time for target from its UUID
+    # try:
+    #     # Your code that might raise an error
+    #     dt = datetime.strptime(uuid, '%Y%m%d%H%M')
+    #     birthed = dt.strftime('%c')
+    # except ValueError as ve:
+    #     # Code to handle the ValueError
+    #     # Log the error message or take any other action
+    #     print("Caught ValueError:", ve)
+    #     print(uuid)
+    #     print(file)
+    #     print("This file does not have a valid UUID.")
+    #     # Continue with the next iteration of the loop
+    # continue
     
     # Birthed time for target from its UUID
     dt = datetime.strptime(uuid, '%Y%m%d%H%M')
@@ -217,31 +243,36 @@ for file in glob.iglob(zettelkasten+'*.md'):
     file_info = {"ntitle": title, "fname": file, "cdate": birthed, "age": note_age, "lastmdate": last_mod, "WC": wcount, "outbound": link, "tags": file_tags}
     # Store the record in the dictionary of records with the UUID as the key zk-info[uuid]
     zk_info[uuid] = file_info
-
-inbound = inbound_uuid(zettel)
-outbound = zk_info[zettel]['outbound']
+    
+# explorer("Slava Akhmechet On Reading In Clusters") 
+# print(tag_cloud("202109200659"))
+# print(zk_info["202302080608"]['outbound'])
+# inbound_uuid("202302080608")
+inbound = inbound_uuid("202109200659")
+outbound = zk_info["202109200659"]['outbound']
 direction = label_links(outbound, inbound)
 for item in direction:
-    try:
-        count=0
-        count=zk_info[item.split(" ")[0]]['outbound'] + inbound
-        unique_count = list(set(count))
-        unique_count.sort()
-        unique_count = len(unique_count)
-      
-        s=f"""
-        {'-'*40}
-        {zk_info[item.split(" ")[0]]['ntitle']} {item.split(" ")[0]}
-        {item.split(" ")[1]} Connection
-        {zk_info[item.split(" ")[0]]['cdate']}
-        {zk_info[item.split(" ")[0]]['age']}
-        {zk_info[item.split(" ")[0]]['lastmdate']}
-        Word Count {zk_info[item.split(" ")[0]]['WC']}
-        Link Weight {unique_count-1}
-        {'-'*40}
-        """
+    count=0
+    count=zk_info[item.split(" ")[0]]['outbound'] + inbound
+    unique_count = list(set(count))
+    unique_count.sort()
+    unique_count = len(unique_count)
+    
+    s=f"""
+    {'-'*40}
+    {zk_info[item.split(" ")[0]]['ntitle']} {item.split(" ")[0]}
+    {item.split(" ")[1]} Connection
+    {zk_info[item.split(" ")[0]]['cdate']}
+    {zk_info[item.split(" ")[0]]['age']}
+    {zk_info[item.split(" ")[0]]['lastmdate']}
+    Word Count {zk_info[item.split(" ")[0]]['WC']}
+    Link Weight {unique_count-1}
+    {'-'*40}
+    """
 
-        print(s)
-    except:
-        #Do nothing
-        pass
+    print(s)
+
+    
+# How do I print the value of the key 202211171832?
+# if zk_info.get("202211171832"):
+#     print(zk_info["202211171832"])
