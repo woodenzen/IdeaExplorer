@@ -5,6 +5,10 @@
 3. find a way to specify outbound, inbound, or bidirectional for each link.
    1. could be a color in the final custom HTML 
 
+Look at pip install sidetable 
+import sidetable
+Check out methods
+[sidetable · PyPI](https://pypi.org/project/sidetable/#prettyprint)
 
 ---
 Here's a list of suggested improvements for the code:

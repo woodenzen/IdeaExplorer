@@ -7,7 +7,6 @@ import os
 import re
 import time
 import glob
-import pandas as pd
 from datetime import datetime
 from plistlib import load
 from urllib.parse import urlparse
@@ -206,17 +205,17 @@ def main(zettel):
             count=zk_info[item.split(" ")[0]]['outbound'] + inbound
             unique_count = sorted(set(count))
             unique_count = len(unique_count)
-            LinkWeight = {unique_count-1}
+
             s=f"""{'★'*1}
-{item.split(" ")[0]}
-{zk_info[item.split(" ")[0]]['ntitle']}
-{item.split(" ")[1]} Connection
-{zk_info[item.split(" ")[0]]['cdate']}
-{zk_info[item.split(" ")[0]]['age']}
-{zk_info[item.split(" ")[0]]['lastmdate']}
-Word Count {zk_info[item.split(" ")[0]]['WC']}
-{LinkWeight}
-{' '*1}
+    {item.split(" ")[0]}
+    {zk_info[item.split(" ")[0]]['ntitle']}
+    {item.split(" ")[1]} Connection
+    {zk_info[item.split(" ")[0]]['cdate']}
+    {zk_info[item.split(" ")[0]]['age']}
+    {zk_info[item.split(" ")[0]]['lastmdate']}
+    Word Count {zk_info[item.split(" ")[0]]['WC']}
+    Link Weight {unique_count-1}
+    {' '*1}
             
             """
             print(s)
@@ -232,4 +231,3 @@ if __name__ == "__main__":
     
 # executionTime = (time.time() - startTime)
 # print('\n Execution time in seconds: ' + str(executionTime))
-

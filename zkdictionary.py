@@ -4,6 +4,7 @@ import os
 import re
 import time
 import glob
+import pandas as pd
 from datetime import datetime
 from plistlib import load
 from urllib.parse import urlparse
@@ -142,6 +143,7 @@ for file in glob.iglob(zettelkasten+'*.md'):
     link = re.findall(r'\d{12}', content)
     # Store the links in the dictionary
     outbound_links.append(link)
+
     
     #####
     # Create a dictionary to store the tags for each file
@@ -156,10 +158,16 @@ for file in glob.iglob(zettelkasten+'*.md'):
     # Store the record in the dictionary of records with the UUID as the key zk-info[uuid]
     zk_info[uuid] = file_info
     
-for key, value in zk_info.items():
-    # if value["ntitle"] == "H-University of Idaho":
-        print('Record ID:', key)
-        print('Record:', value)
+    
+# create a pandas dataframe from the dictionary
+df = pd.DataFrame.from_dict(zk_info, orient='index')
+print(df)
+
+# # Print the dictionary    
+# for key, value in zk_info.items():
+#     # if value["ntitle"] == "H-University of Idaho":
+#         print('Record ID:', key)
+#         print('Record:', value)
    
 # How do I print the value of the key 202211171832?
 # if zk_info.get("202211171832"):
