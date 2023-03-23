@@ -207,44 +207,31 @@ def main(zettel):
             unique_count = sorted(set(count))
             unique_count = len(unique_count)
             LinkWeight = {unique_count-1}
-#             s=f"""{'★'*1}
-# {item.split(" ")[0]}
-# {zk_info[item.split(" ")[0]]['ntitle']}
-# {item.split(" ")[1]} Connection
-# {zk_info[item.split(" ")[0]]['cdate']}
-# {zk_info[item.split(" ")[0]]['age']}
-# {zk_info[item.split(" ")[0]]['lastmdate']}
-# Word Count {zk_info[item.split(" ")[0]]['WC']}
-# {LinkWeight}
-# {' '*1}
-#"""
+            s=f"""{'★'*1}
+{item.split(" ")[0]}
+{zk_info[item.split(" ")[0]]['ntitle']}
+{item.split(" ")[1]} Connection
+{zk_info[item.split(" ")[0]]['cdate']}
+{zk_info[item.split(" ")[0]]['age']}
+{zk_info[item.split(" ")[0]]['lastmdate']}
+Word Count {zk_info[item.split(" ")[0]]['WC']}
+{LinkWeight}
+{' '*1}
             
-            
-            data = {'Star': '★',
-        'UUID': item.split(" ")[0],
-        'Title': zk_info[item.split(" ")[0]]['ntitle'],
-        'Connection': item.split(" ")[1],
-        'Created': zk_info[item.split(" ")[0]]['cdate'],
-        'Age': zk_info[item.split(" ")[0]]['age'],
-        'LastModified': zk_info[item.split(" ")[0]]['lastmdate'],
-        'WordCount': zk_info[item.split(" ")[0]]['WC'],
-        'LinkWeight': LinkWeight}
-
-            df = pd.DataFrame(data=data, index=[0])
-
-            print(df)
+            """
+            print(s)
                 # with open('file.txt', 'a', newline='\n') as f: f.write(data)
 
         except:
             #Do nothing
             pass
         
-    # zk_info_df = pd.DataFrame.from_dict(zk_info, orient='index')        
+    zk_info_df = pd.DataFrame.from_dict(zk_info, orient='index')        
         
-    # html_table = zk_info_df.to_html(escape=False, formatters=dict(Website=lambda x: '<a href="{}">{}</a>'.format(x, x)))
+    html_table = zk_info_df.to_html(escape=False, formatters=dict(Website=lambda x: '<a href="{}">{}</a>'.format(x, x)))
 
 # Display the HTML table
-    # print(html_table)
+    print(html_table)
 
 if __name__ == "__main__":
     # main(os.environ["KMVAR_Local_UUID"])
