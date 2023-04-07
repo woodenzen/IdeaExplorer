@@ -22,7 +22,7 @@ def search_for_incoming(UID):
 #####
 # Variables
 #####
-zettelkasten = TheArchivePath()
+zettelkasten = "/Users/will/Dropbox/zettelkasten/"
 zettel = "Process And Create New Ideas 202103111214.md"
 
 # Birthed time for target from its UID
@@ -36,7 +36,7 @@ birthed = dt.strftime('%c')
 source_link = " \[\["+source+"\]\]"
 
 # Modification time of the target
-mod_time = os.path.getmtime(TheArchivePath() + zettel)
+mod_time = os.path.getmtime(zettelkasten + zettel)
 
 # Current time
 now=datetime.now()

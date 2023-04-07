@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/local/bin/python3.9 # This is the path to the python3.9 executable on my machine. You may need to change this.
 
 # import time
 # startTime = time.time()
@@ -231,8 +231,9 @@ Word Count {zk_info[item.split(" ")[0]]['WC']}
     html_table = zk_info_df.to_html(escape=False, formatters=dict(Website=lambda x: '<a href="{}">{}</a>'.format(x, x)))
 
 # Display the HTML table
-    print(html_table)
-
+    #print(html_table)
+#print html_table to a file
+    print(html_table, file=open("zk_info.html", "w"))
 if __name__ == "__main__":
     # main(os.environ["KMVAR_Local_UUID"])
     main("202302280908")
