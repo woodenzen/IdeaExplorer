@@ -96,10 +96,8 @@ def main(zettel):
         # set() removes duplicates
         direction = []
         for value in combined:
-            if value == zettel:
-                direction.append(f"{value} Originator")
-            elif value in outbound and value in inbound:
-                direction.append(f"{value} Bilateral")   
+            if value in outbound and value in inbound:
+                direction.append(f"{value} Bilateral")
             elif value in outbound:
                 direction.append(f"{value} Outbound")
             elif value in inbound:
@@ -221,14 +219,10 @@ def main(zettel):
             unique_count = sorted(set(count))
             unique_count = len(unique_count)
             LinkWeight = unique_count-1
-            
-            # Create a link to the note in the zettelkasten
-            zetteltitle = f'<a href="thearchive://match/{zk_info[item.split(" ")[0]]["ntitle"]} {item.split(" ")[0]}">{zk_info[item.split(" ")[0]]["ntitle"]}</a>'
-            
-            # create a dictionary containing the note information for each row. 
-            # To add UUID 'UUID': item.split(" ")[0],
-            # To add date created 'Created': zk_info[item.split(" ")[0]]['cdate'],
-            data = {'Title': zetteltitle,
+                    # create a dictionary containing the note information for each row. 
+                    # To add UUID 'UUID': item.split(" ")[0],
+                    # To add date created 'Created': zk_info[item.split(" ")[0]]['cdate'],
+            data = {'Title': zk_info[item.split(" ")[0]]['ntitle'],
                     'Connection': item.split(" ")[1],
                     'Age': zk_info[item.split(" ")[0]]['age'],
                     'Last Modified': zk_info[item.split(" ")[0]]['Last Modified'],
@@ -244,21 +238,32 @@ def main(zettel):
             pass
   
     zk_df = pd.DataFrame(rows, index=None)
+    # zk_df = zk_df.sort_values('Last Modified', ascending=False)
+    # zk_df = zk_df.sort_values(by='Last Modified', key=lambda x: x.astype(int))
+   
+
+    
+    # apply the function to convert text to integers to the 'Last Modified' column
+    # zk_df['Last Modified'] = zk_df['Last Modified'].apply(extract_days_ago)
 
     # sort by the 'Last Modified' column
     zk_df.sort_values(by='LW', ascending=False, inplace=True)
 
     #Create HTML and Print html_table to a file
     html_table = zk_df.to_html(index=False, escape=False, formatters=dict(Website=lambda x: '<a href="{}">{}</a>'.format(x, x)))
+    # print(html_table, file=open("zk_info.html", "w"))
     print(html_table)
+    
+    
     
 # executionTime = (time.time() - startTime)
 # print('\n Execution time in seconds: ' + str(executionTime))
-
 if __name__ == "__main__":
-    main(os.environ["KMVAR_Local_UUID"])
-    # main("202108101600") # Solitude and Leadership
+    # main(os.environ["KMVAR_Local_UUID"])
+    main("202108101600")
     
+
+       
 # executionTime = (time.time() - startTime)
 # print('\n Execution time in seconds: ' + str(executionTime))
 
