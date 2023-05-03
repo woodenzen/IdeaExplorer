@@ -7,16 +7,11 @@ The Idea Explorer or Navigator is an idea that can help surface interesting rela
 ![Soren's Idea Explorer](media/Soren'sIdeaExplorer.png)
 
 ## Install
-- Tested on Python 3.9.13
+- Tested on Python 3.9
 - Dependencies are in requirements.txt
 
 ## Use
 - The script will find your active zettelkasten
-- Currently, the script requires you manually place the file name in the "zettel" variable spot.
-- From a terminal cd to the directory containing the script.
-```
-python ./main.py
-```
 - The output will appear on stdout.
 
 ## Notes on work to do:
