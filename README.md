@@ -1,14 +1,11 @@
 # Zettelkasten Idea Explorer  
 **Script in development**  
 **README document in development**  
+Think about the Idea Explore as a way to look at note sequences. Sequences that develop an idea.
+
 Designed with The Archive, zettelkasting application, in mind. Plain text with wikilinks. 
-<<<<<<< HEAD
-My ideas for this script are modeled after [the public musings of Soren Bjornstad](https://zettelkasten.sorenbjornstad.com/#ImprovementOfDailyWork)  
-The Idea Explorer or Navigator is an idea that can help surface interesting relationships by looking at common tags, age and modification times, and the prevalence of incoming and outgoing links. There is likely other relevance that can be "fished out of the idea pond."
-=======
 My ideas ares for this script are modeled after [the public musings of Soren Bjornstad](https://zettelkasten.sorenbjornstad.com/#ImprovementOfDailyWork)  
 The Idea Explorer is an idea that can help surface interesting relationships by looking at age and modification times, and the prevalence of incoming and outgoing links. There is likely other relevance that can be "fished out of the idea pond."
->>>>>>> fe6b95548fb25665ff9ef6ded295f4aa647a5374
 
 ![Soren's Idea Explorer](media/Soren'sIdeaExplorer.png)
 
