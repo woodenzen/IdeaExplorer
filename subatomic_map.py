@@ -44,10 +44,10 @@ def main(zettel):
             content = f.read()
         links = re.findall(r'\[\[\w+\]\]', content)
 
-    # Create a dictionary to store the tags for each file
-    file_tags = {}
+    # Create a dictionary to store the subatomic for each file
+    file_subatomic = {}
 
-    # Iterate through each link looking for files listing tags in a dictionary
+    # Iterate through each link looking for files listing subatomic in a dictionary
     for link in links:
         # Get the link without the brackets
         link = link[2:-2]
@@ -57,42 +57,27 @@ def main(zettel):
             # Open the file
             with open(file_name, 'r') as f:
                 content = f.read()
-            tags = re.findall(r'#(?!#{1})\S+', content)
+            # Find all subatomic fragments
+            subatomic = re.findall(r'(?<=Subatomic: ).*(?=\s)', content)
             # Store the file name as a href link in the dictionary
             note_name = file_name[33:-16]
             note_link = f'<a href="thearchive://match/{note_name} {file_name[-15:-3]}">{note_name}</a>'
             # Store the subatomic in the dictionary
-            file_tags[note_link] = (note_link, ', '.join(tags))
+            file_subatomic[note_name] = (note_link, ', '.join(subatomic))
  
-
-    # Create a DataFrame from the file_tags dictionary
-    df = pd.DataFrame.from_dict(file_tags, orient='index', columns=['Title', 'Tags'])
-
-    # Add a column for the file names
-    df['Title'] = df.index.str[:]
-
-    # Count occurrences of each tag
-    counts = Counter([tag for values in df['Tags'].values for tag in values.split(', ')])
-
-    # Modify each tag to be in the format "#tag X"
-    df['Tags'] = df['Tags'].apply(lambda tags: [f"{tag}({str(counts[tag])})" for tag in tags.split(', ')])
-
-    # Concatenate all the tags using the join function
-    df['Tags'] = df['Tags'].apply(lambda tags: ", ".join(tags))
+    # Create a DataFrame from the file_subatomic dictionary
+    df = pd.DataFrame.from_dict(file_subatomic, orient='index', columns=['Title', 'Subatomic'])
+    # print(df)
     # Reorder the columns
-    df = df[['Title', 'Tags']]
+    df = df[['Title', 'Subatomic']]
 
-        #Create HTML and Print html_table to a file
+    #Create HTML and Print html_table to a file
     html_table = df.to_html(index=False, escape=False, formatters=dict(Note=lambda x: '<a href="{}">{}</a>'.format(x[0], x[1])))
     
-        
-    # executionTime = (time.time() - startTime)
-    # print('\n Execution time in seconds: ' + str(executionTime))
+    # Print the results
     print(html_table)
+    # print(df)
 if __name__ == "__main__":
     main(os.environ["KMVAR_Local_UUID"])
-    # main("202108101600") # Solitude and Leadership
+    # main("202305120821") # Unentitled to an opinion
 
-
-# Print the results
-# print(df.to_string(index=False))
