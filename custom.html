@@ -118,21 +118,25 @@
 <body>
     <div class="tab">
         <button class="tablinks" onclick="openTab(event, 'tab1')">Idea Explorer</button>
-        <button class="tablinks" onclick="openTab(event, 'tab2')">Tab 2</button>
-        <button class="tablinks" onclick="openTab(event, 'tab3')">Tab 3</button>
+        <button class="tablinks" onclick="openTab(event, 'tab2')">Tag Map</button>
     </div>
+
     <div id="tab1" class="tabcontent">
-    <div id="TablePlaceHolder">
-    <script>
-        document.getElementById("TablePlaceHolder").innerHTML = window.KeyboardMaestro.GetVariable("theTable");
-    </script>
+        <div id="TablePlaceHolder">
+            <script>
+                document.getElementById("TablePlaceHolder").innerHTML = window.KeyboardMaestro.GetVariable("theTable");
+            </script>
+        </div>
     </div>
-    </div>
+
     <div id="tab2" class="tabcontent">
-        <h3>Tab 2 Content</h3>
-        <p>Some text here...</p>
+        <div id="TagMapPlaceHolder">
+            <script>
+                document.getElementById("TagMapPlaceHolder").innerHTML = window.KeyboardMaestro.GetVariable("theTagMap");
+            </script>
+        </div>
     </div>
-    
+
     <div id="tab3" class="tabcontent">
         <h3>Tab 3 Content</h3>
         <p>Some text here...</p>
