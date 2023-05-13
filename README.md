@@ -3,6 +3,9 @@
 **README document in development**  
 Think about the Idea Explore as a way to look at note sequences. Sequences that develop an idea.
 
+Here is a [link to the discussion](https://forum.zettelkasten.de/discussion/2565/idea-explorer-an-extension-exclusively-for-the-archive) in the forum.zettelkasten.de forums.
+
+
 Designed with The Archive, zettelkasting application, in mind. Plain text with wikilinks. 
 My ideas ares for this script are modeled after [the public musings of Soren Bjornstad](https://zettelkasten.sorenbjornstad.com/#ImprovementOfDailyWork)  
 The Idea Explorer is an idea that can help surface interesting relationships by looking at age and modification times, and the prevalence of incoming and outgoing links. There is likely other relevance that can be "fished out of the idea pond."
