@@ -11,7 +11,7 @@ from plistlib import load
 from urllib.parse import urlparse
 from collections import Counter
  
-def main(zettel):
+def tagMap(zettel):
     #####
     # Function for finding the path to The Archive
     #####
@@ -90,8 +90,8 @@ def main(zettel):
     # print('\n Execution time in seconds: ' + str(executionTime))
     print(html_table)
 if __name__ == "__main__":
-    main(os.environ["KMVAR_Local_UUID"])
-    # main("202108101600") # Solitude and Leadership
+    tagMap(os.environ["KMVAR_Local_UUID"])
+    # tagMap("202108101600") # Solitude and Leadership
 
 
 # Print the results
