@@ -2,13 +2,6 @@ import customtkinter
 
 customtkinter.set_appearance_mode("dark")
 
-class MyFrame(customtkinter.CTkScrollableFrame):
-    def __init__(self, master, **kwargs):
-        super().__init__(master, **kwargs)
-
-        # add widgets onto the frame...
-        # self.label = customtkinter.CTkLabel(self)
-        # self.label.grid(row=0, column=0, padx=20)
         
 class MyTabView(customtkinter.CTkTabview):
     def __init__(self, master, **kwargs):
@@ -45,8 +38,6 @@ class App(customtkinter.CTk):
         self.button.grid(row=2, column=0, padx=10, pady=10)
         self.tab_view = MyTabView(master=self)
         self.tab_view.grid(row=0, column=0, padx=20, pady=20, sticky="ews")
-        self.my_frame = MyFrame(master=self, width=300, height=200, corner_radius=0, fg_color="transparent")
-        self.my_frame.grid(row=1, column=0, sticky="nsew")
 
         # add widgets onto the frame...
     def button_callback(self):

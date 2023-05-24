@@ -13,7 +13,9 @@ from plistlib import load
 from urllib.parse import urlparse
 from collections import Counter
 from collections import defaultdict
+# from profilehooks import profile
 
+# @profile(stdout=False, filename='profile.txt')
 def main(zettel):
     #####
     # Function for finding the path to The Archive
@@ -56,15 +58,10 @@ def main(zettel):
         """
         try: # Try to execute the following code block. Some records have empty 'tags' field, so this will throw an error.
             outbound_records = [zk_info[id] for id in zk_info[zettel]['outbound'] if 'outbound' in zk_info[id]]
-            tag_count = defaultdict(int)
-            for record in outbound_records:
-                for tag_list in record['tags']:
-                    for tag in tag_list:
-                        tag_count[tag] += 1
+            tag_count = Counter(tag for record in outbound_records for tag_list in record['tags'] for tag in tag_list)
             sorted_tag_count = sorted(tag_count.items(), key=lambda x: x[1], reverse=True)
             for tag, count in sorted_tag_count:
-                print(f"{tag} {count}")
-                # return tag, count
+                print(f"{tag} {count}")             # return tag, count
         except: 
             # Do nothing, just continue execution
             pass
@@ -80,11 +77,7 @@ def main(zettel):
         :param zettel: A string representing a specific record in the `zk_info` dictionary.
         :return: A list of related records to the `zettel`.
         """
-        related_records = []
-        for key, value in zk_info.items():
-            # If the record has an 'outbound' field and the `zettel` is in it, and the key is not 'outbound', append the key to the list of related records
-            if 'outbound' in value and zettel in value['outbound'] and key != 'outbound':
-                related_records.append(key)
+        related_records = [key for key, value in zk_info.items() if 'outbound' in value and zettel in value['outbound'] and key != 'outbound']
         return related_records
 
     #####
