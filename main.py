@@ -13,6 +13,7 @@ from plistlib import load
 from urllib.parse import urlparse
 from collections import Counter
 from collections import defaultdict
+from functools import lru_cache
 # from profilehooks import profile
 
 # @profile(stdout=False, filename='profile.txt')
@@ -69,6 +70,7 @@ def main(zettel):
     #####
     # Function for inbound links uuids
     #####        
+    @lru_cache(maxsize=None)
     def inbound_uuid(zettel):
         # sourcery skip: for-append-to-extend, inline-immediately-returned-variable, list-comprehension
         """
@@ -195,7 +197,7 @@ def main(zettel):
         # Find all links in the form of 12 digits in a row
         link = re.findall(r'\d{12}', content)
         outbound_links = [link]
-        # Find all tags in the form of #XXXX preceded by a space
+           # Find all tags in the form of #XXXX preceded by a space
         tags = re.findall(r'#(?!#{1})\S+', content)
         file_tags = [tags]
         # Create each record
