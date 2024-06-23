@@ -240,7 +240,7 @@ def main(zettel):
   
     zk_df = pd.DataFrame(rows, index=None)
 
-    # sort by the 'Link Weight' column
+    # sort by the 'Last Modified' column
     zk_df.sort_values(by='LW', ascending=False, inplace=True)
 
     #Create HTML and Print html_table to a file
