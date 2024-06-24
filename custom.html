@@ -120,6 +120,7 @@
         <button class="tablinks" onclick="openTab(event, 'tab1')">Idea Explorer</button>
         <button class="tablinks" onclick="openTab(event, 'tab2')">Tag Map</button>
         <button class="tablinks" onclick="openTab(event, 'tab3')">Subatomic</button>
+        <button class="tablinks" onclick="openTab(event, 'tab4')">Second Tier</button>
         </div>
 
     <div id="tab1" class="tabcontent">
@@ -142,6 +143,14 @@
         <div id="SubatomicPlaceHolder">
             <script>
                 document.getElementById("SubatomicPlaceHolder").innerHTML = window.KeyboardMaestro.GetVariable("theSubatomic");
+            </script>
+        </div>
+    </div>
+
+    <div id="tab4" class="tabcontent">
+        <div id="SecondTierPlaceHolder">
+            <script>
+                document.getElementById("SecondTierPlaceHolder").innerHTML = window.KeyboardMaestro.GetVariable("theSecondTier");
             </script>
         </div>
     </div>

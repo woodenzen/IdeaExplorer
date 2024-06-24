@@ -9,7 +9,6 @@ file_path=zettelkasten, "Character Development Literary Lever 202406170833.md"
 def gather_links(file_path):
     with open(file_path, 'r') as file:
         data = file.read()
-        print(f"File Path: {file_path}")
     links = [match.group(1) for match in re.finditer(r'\[\[(\w+)\]\]', data)]
     return links
 
@@ -23,7 +22,6 @@ def gather_links_from_links(links, target_file):
             with open(file, 'r') as f:
                 content = f.read()
                 second_layer_links = [match.group(1) for match in re.finditer(r'\[\[(\w+)\]\]', content)]
-                print(f"Second Layer Links: {second_layer_links}")
                 for second_link in second_layer_links:
                     # if second_link == link:
                     #     continue
@@ -33,11 +31,11 @@ def gather_links_from_links(links, target_file):
                         file_path = matched_files[0]
                         file_name_with_extension = os.path.basename(file_path)
                         file_name, _ = os.path.splitext(file_name_with_extension)
-                        print(f"File Name {file_name}")
                     else:
                         print(f"No files matched the pattern {zettelkasten}/*{second_link}.md")
                     if file_name:  # only create zettel if file_name is not None
-                        zettel = f"[{file_name}](thearchive://match/›[[{link})"
+                        zettel =  f'<a href="thearchive://match/{file_name}"> {file_name[:-13]}</a>'
+                        # f'<a href="thearchive://match/{note_name} {file_name[-15:-3]}">{note_name}</a>'
                         all_links.append({'Title': zettel})
     return all_links
 
@@ -48,15 +46,17 @@ def main(target):
         return
     target_file = target_files[0]
     links = gather_links(target_file)
-    print(f"Links: {links}")  # print the extracted links
     all_links = gather_links_from_links(links, target_file)
-    print(f"All links: {all_links}")  # print the final data
     df = pd.DataFrame(all_links)
     html_table = df.to_html(index=False, escape=False)
     print(html_table)
 
 if __name__ == "__main__":
     # main()
-    # main(os.environ["KMVAR_Local_UUID"])
-    main("202406072026") # Unentitled to an opinion
+    main(os.environ["KMVAR_Local_UUID"])
+    # main("202406180710") # Unentitled to an opinion
+
+    #TODO - Unique the links
+    #TODO - sort the links by the title
+    #TODO - Add a column for subatomic.
 
