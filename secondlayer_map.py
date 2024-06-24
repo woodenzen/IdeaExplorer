@@ -32,7 +32,8 @@ def gather_links_from_links(links, target_file):
                         file_name_with_extension = os.path.basename(file_path)
                         file_name, _ = os.path.splitext(file_name_with_extension)
                     else:
-                        print(f"No files matched the pattern {zettelkasten}/*{second_link}.md")
+                        continue
+                        # print(f"No files matched the pattern {zettelkasten}/*{second_link}.md")
                     if file_name:  # only create zettel if file_name is not None
                         zettel =  f'<a href="thearchive://match/{file_name}"> {file_name[:-13]}</a>'
                         # f'<a href="thearchive://match/{note_name} {file_name[-15:-3]}">{note_name}</a>'
@@ -42,21 +43,25 @@ def gather_links_from_links(links, target_file):
 def main(target):
     target_files = glob.glob(f'{zettelkasten}/*{target}.md')
     if not target_files:
-        print(f"No files found for target {target}")
+        # print(f"No files found for target {target}")
         return
     target_file = target_files[0]
     links = gather_links(target_file)
     all_links = gather_links_from_links(links, target_file)
     df = pd.DataFrame(all_links)
-    html_table = df.to_html(index=False, escape=False)
+    # Assuming 'Title' is the column you want to make unique and sort by
+    # Step 1: Drop duplicates based on the 'Title' column
+    df_unique = df.drop_duplicates(subset=['Title'])
+
+    # Step 2: Sort the DataFrame by the 'Title' column
+    df_sorted = df_unique.sort_values(by='Title')
+    html_table = df_sorted.to_html(index=False, escape=False)
     print(html_table)
 
 if __name__ == "__main__":
     # main()
     main(os.environ["KMVAR_Local_UUID"])
-    # main("202406180710") # Unentitled to an opinion
+    # main("202105301434") # Unentitled to an opinion
 
-    #TODO - Unique the links
-    #TODO - sort the links by the title
     #TODO - Add a column for subatomic.
 
