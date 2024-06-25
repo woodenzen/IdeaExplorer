@@ -11,7 +11,7 @@ from plistlib import load
 from urllib.parse import urlparse
 from collections import Counter
  
-def subatomicMap(zettel):
+def main(zettel):
     #####
     # Function for finding the path to The Archive
     #####
@@ -78,6 +78,6 @@ def subatomicMap(zettel):
     print(html_table)
     # print(df)
 if __name__ == "__main__":
-    subatomicMap(os.environ["KMVAR_Local_UUID"])
-    # subatomicMap("202305120821") # Unentitled to an opinion
+    main(os.environ["KMVAR_Local_UUID"])
+    # main("202305120821") # Unentitled to an opinion
 

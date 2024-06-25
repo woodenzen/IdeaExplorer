@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Keyboard Maestro Form Example Testing</title>
+    <style type="text/css">
+        body {
+            background-color: #DBE8F9;
+            font: 11px "Lucida Grande", serif;
+            color: #5A698B;
+            width: 320px;
+            margin: 0;
+        }
+
+        form {
+            font: 11px "Chalkduster", serif;
+        }
+
+        #title {
+            width: 100%;
+            color: #5A698B;
+            padding-top: 5px;
+            padding-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        .col1 {
+            text-align: right;
+            width: 105px;
+            padding-top: 5px;
+            height: 31px;
+            margin: 0;
+            float: left;
+        }
+
+        .message {
+            height: 75px;
+        }
+
+        .selection {
+            height: 75px;
+        }
+
+        .col2 {
+            width: 310px;
+            height: 31px;
+            display: block;
+            float: left;
+            margin: 0;
+        }
+
+        div.row {
+            clear: both;
+            width: 100%;
+        }
+
+        .submit {
+            height: 29px;
+            width: 100%;
+            padding-top: 5px;
+            clear: both;
+        }
+
+        .input {
+            width: 300px;
+            background-color: #fff;
+            color: #5A698B;
+            margin: 4px 0 5px 8px;
+            border: 1px solid #8595B2;
+        }
+
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body data-kmwindow="SCREEN(Main,Left,20%),SCREEN(Main,Top,20%),320,400">
+    <div id="title">
+        Title
+    </div>
+    <form id="myform" action="#" method="post">
+        <div class="center submit">
+            <button name="OK" type="button" onclick="window.KeyboardMaestro.Submit('OK')">OK</button>
+            <button name="Cancel" type="button" onclick="window.KeyboardMaestro.Cancel('Cancel')">Cancel</button>
+        </div>
+        <div>
+            <form>
+                <a href="thearchive://match/Writing From Outline 202005040730">Writing From Outline 202005040730</a>
+            </form>
+        </div>
+        <div class="row">
+            <span class="col2">
+                <textarea name="Quick_Note" class="input" type="text" id="name" style="height:300px;font-size:12pt;"
+                    autofocus rows="12" cols="50"></textarea>
+            </span>
+        </div>
+    </form>
+    <script>
+
+        function KMInit() {
+            document.getElementById('title').innerHTML = window.KeyboardMaestro.GetVariable("Local Title");
+            document.title = window.KeyboardMaestro.GetVariable("Local Title");
+        }
+
+    </script>
+</body>
+
+</html>

@@ -13,10 +13,7 @@ from plistlib import load
 from urllib.parse import urlparse
 from collections import Counter
 from collections import defaultdict
-from functools import lru_cache
-# from profilehooks import profile
 
-# @profile(stdout=False, filename='profile.txt')
 def main(zettel):
     #####
     # Function for finding the path to The Archive
@@ -59,10 +56,15 @@ def main(zettel):
         """
         try: # Try to execute the following code block. Some records have empty 'tags' field, so this will throw an error.
             outbound_records = [zk_info[id] for id in zk_info[zettel]['outbound'] if 'outbound' in zk_info[id]]
-            tag_count = Counter(tag for record in outbound_records for tag_list in record['tags'] for tag in tag_list)
+            tag_count = defaultdict(int)
+            for record in outbound_records:
+                for tag_list in record['tags']:
+                    for tag in tag_list:
+                        tag_count[tag] += 1
             sorted_tag_count = sorted(tag_count.items(), key=lambda x: x[1], reverse=True)
             for tag, count in sorted_tag_count:
-                print(f"{tag} {count}")             # return tag, count
+                print(f"{tag} {count}")
+                # return tag, count
         except: 
             # Do nothing, just continue execution
             pass
@@ -70,7 +72,6 @@ def main(zettel):
     #####
     # Function for inbound links uuids
     #####        
-    @lru_cache(maxsize=None)
     def inbound_uuid(zettel):
         # sourcery skip: for-append-to-extend, inline-immediately-returned-variable, list-comprehension
         """
@@ -79,7 +80,11 @@ def main(zettel):
         :param zettel: A string representing a specific record in the `zk_info` dictionary.
         :return: A list of related records to the `zettel`.
         """
-        related_records = [key for key, value in zk_info.items() if 'outbound' in value and zettel in value['outbound'] and key != 'outbound']
+        related_records = []
+        for key, value in zk_info.items():
+            # If the record has an 'outbound' field and the `zettel` is in it, and the key is not 'outbound', append the key to the list of related records
+            if 'outbound' in value and zettel in value['outbound'] and key != 'outbound':
+                related_records.append(key)
         return related_records
 
     #####
@@ -91,10 +96,8 @@ def main(zettel):
         # set() removes duplicates
         direction = []
         for value in combined:
-            if value == zettel:
-                direction.append(f"{value} Originator")
-            elif value in outbound and value in inbound:
-                direction.append(f"{value} Bilateral")   
+            if value in outbound and value in inbound:
+                direction.append(f"{value} Bilateral")
             elif value in outbound:
                 direction.append(f"{value} Outbound")
             elif value in inbound:
@@ -197,7 +200,7 @@ def main(zettel):
         # Find all links in the form of 12 digits in a row
         link = re.findall(r'\d{12}', content)
         outbound_links = [link]
-           # Find all tags in the form of #XXXX preceded by a space
+        # Find all tags in the form of #XXXX preceded by a space
         tags = re.findall(r'#(?!#{1})\S+', content)
         file_tags = [tags]
         # Create each record
@@ -216,14 +219,10 @@ def main(zettel):
             unique_count = sorted(set(count))
             unique_count = len(unique_count)
             LinkWeight = unique_count-1
-            
-            # Create a link to the note in the zettelkasten
-            zetteltitle = f'<a href="thearchive://match/{zk_info[item.split(" ")[0]]["ntitle"]} {item.split(" ")[0]}">{zk_info[item.split(" ")[0]]["ntitle"]}</a>'
-            
-            # create a dictionary containing the note information for each row. 
-            # To add UUID 'UUID': item.split(" ")[0],
-            # To add date created 'Created': zk_info[item.split(" ")[0]]['cdate'],
-            data = {'Title': zetteltitle,
+                    # create a dictionary containing the note information for each row. 
+                    # To add UUID 'UUID': item.split(" ")[0],
+                    # To add date created 'Created': zk_info[item.split(" ")[0]]['cdate'],
+            data = {'Title': zk_info[item.split(" ")[0]]['ntitle'],
                     'Connection': item.split(" ")[1],
                     'Age': zk_info[item.split(" ")[0]]['age'],
                     'Last Modified': zk_info[item.split(" ")[0]]['Last Modified'],
@@ -239,21 +238,32 @@ def main(zettel):
             pass
   
     zk_df = pd.DataFrame(rows, index=None)
+    # zk_df = zk_df.sort_values('Last Modified', ascending=False)
+    # zk_df = zk_df.sort_values(by='Last Modified', key=lambda x: x.astype(int))
+   
 
-    # sort by the 'Link Weight' column
+    
+    # apply the function to convert text to integers to the 'Last Modified' column
+    # zk_df['Last Modified'] = zk_df['Last Modified'].apply(extract_days_ago)
+
+    # sort by the 'Last Modified' column
     zk_df.sort_values(by='LW', ascending=False, inplace=True)
 
     #Create HTML and Print html_table to a file
     html_table = zk_df.to_html(index=False, escape=False, formatters=dict(Website=lambda x: '<a href="{}">{}</a>'.format(x, x)))
+    # print(html_table, file=open("zk_info.html", "w"))
     print(html_table)
+    
+    
     
 # executionTime = (time.time() - startTime)
 # print('\n Execution time in seconds: ' + str(executionTime))
-
 if __name__ == "__main__":
-    main(os.environ["KMVAR_Local_UUID"])
-    # main("202406230717") 
+    # main(os.environ["KMVAR_Local_UUID"])
+    main("202108101600")
     
+
+       
 # executionTime = (time.time() - startTime)
 # print('\n Execution time in seconds: ' + str(executionTime))
 
