@@ -57,12 +57,12 @@ def main(zettel):
             # Open the file
             with open(file_name, 'r') as f:
                 content = f.read()
-            tags = re.findall(r'#(?!#{1})\S+', content)
-            # Store the file name as a href link in the dictionary
-            note_name = file_name[33:-16]
-            note_link = f'<a href="thearchive://match/{note_name} {file_name[-15:-3]}">{note_name}</a>'
-            # Store the subatomic in the dictionary
-            file_tags[note_link] = (note_link, ', '.join(tags))
+                tags = re.findall(r'#(?!#{1})\S+', content)
+                # Store the file name as a href link in the dictionary
+                note_name = file_name[33:-16]
+                note_link = f'<a href="thearchive://match/{note_name} {file_name[-15:-3]}">{note_name}</a>'
+                # Store the subatomic in the dictionary
+                file_tags[note_link] = (note_link, ', '.join(tags))
  
 
     # Create a DataFrame from the file_tags dictionary
@@ -90,9 +90,8 @@ def main(zettel):
     # print('\n Execution time in seconds: ' + str(executionTime))
     print(html_table)
 if __name__ == "__main__":
-    main(os.environ["KMVAR_Local_UUID"])
-    # main("202108101600") # Solitude and Leadership
-
+    # main(os.environ["KMVAR_Local_UUID"])
+    main("202406230717")
 
 # Print the results
 # print(df.to_string(index=False))
