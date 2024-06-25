@@ -78,6 +78,6 @@ def main(zettel):
     print(html_table)
     # print(df)
 if __name__ == "__main__":
-    # main(os.environ["KMVAR_Local_UUID"])
-    main("202305120821") # Unentitled to an opinion
+    main(os.environ["KMVAR_Local_UUID"])
+    # main("202305120821") # Unentitled to an opinion
 

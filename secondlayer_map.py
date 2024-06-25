@@ -2,7 +2,8 @@ import os
 import re
 import glob
 import pandas as pd
-from bs4 import BeautifulSoup
+from subatomicFunction import get_subatomic_from_link
+
 
 zettelkasten = "/Users/will/Dropbox/zettelkasten"
 file_path=zettelkasten, "Character Development Literary Lever 202406170833.md"   
@@ -31,13 +32,10 @@ def gather_links_from_links(links, target_file):
                         file_path = matched_files[0]
                         file_name_with_extension = os.path.basename(file_path)
                         file_name, _ = os.path.splitext(file_name_with_extension)
-                    else:
-                        continue
-                        # print(f"No files matched the pattern {zettelkasten}/*{second_link}.md")
-                    if file_name:  # only create zettel if file_name is not None
+                        subatomic_line = get_subatomic_from_link(second_link)[0] if get_subatomic_from_link(second_link) else ''  # Get subatomic line
                         zettel =  f'<a href="thearchive://match/{file_name}"> {file_name[:-13]}</a>'
-                        # f'<a href="thearchive://match/{note_name} {file_name[-15:-3]}">{note_name}</a>'
-                        all_links.append({'Title': zettel})
+                        all_links.append({'Title': zettel, 'Subatomic': subatomic_line})
+                
     return all_links
 
 def main(target):
@@ -54,14 +52,16 @@ def main(target):
     df_unique = df.drop_duplicates(subset=['Title'])
 
     # Step 2: Sort the DataFrame by the 'Title' column
-    df_sorted = df_unique.sort_values(by='Title')
+    df_sorted = df_unique.sort_values(by=['Subatomic', 'Title'], ascending=[False, True])
     html_table = df_sorted.to_html(index=False, escape=False)
     print(html_table)
 
 if __name__ == "__main__":
     # main()
     main(os.environ["KMVAR_Local_UUID"])
-    # main("202105301434") # Unentitled to an opinion
+    # main("202303252043") # Unentitled to an opinion
 
-    #TODO - Add a column for subatomic.
+    #TODO - Fix Tag and Subatomic Maps
+    #TODO - increase font size
+    #TODO - Incorperate link weights and then sort by them.
 
