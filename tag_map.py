@@ -58,11 +58,13 @@ def main(zettel):
             with open(file_name, 'r') as f:
                 content = f.read()
                 tags = re.findall(r'#(?!#{1})\S+', content)
+                # Format each tag as an HTML link
+                formatted_tags = [f'<a href="thearchive://match/{tag.replace("#", "%23")}">{tag}</a>' for tag in tags]
                 # Store the file name as a href link in the dictionary
                 note_name = file_name[33:-16]
                 note_link = f'<a href="thearchive://match/{note_name} {file_name[-15:-3]}">{note_name}</a>'
                 # Store the subatomic in the dictionary
-                file_tags[note_link] = (note_link, ', '.join(tags))
+                file_tags[note_link] = (note_link, ', '.join(formatted_tags))
  
 
     # Create a DataFrame from the file_tags dictionary
