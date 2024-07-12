@@ -92,8 +92,8 @@ def main(zettel):
     # print('\n Execution time in seconds: ' + str(executionTime))
     print(html_table)
 if __name__ == "__main__":
-    # main(os.environ["KMVAR_Local_UUID"])
-    main("202406230717")
+    main(os.environ["KMVAR_Local_UUID"])
+    # main("202406230717")
 
 # Print the results
 # print(df.to_string(index=False))
