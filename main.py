@@ -252,7 +252,7 @@ def main(zettel):
 
 if __name__ == "__main__":
     main(os.environ["KMVAR_Local_UUID"])
-    # main("202406230717") 
+    # main("2   02406230717") 
     
 # executionTime = (time.time() - startTime)
 # print('\n Execution time in seconds: ' + str(executionTime))
